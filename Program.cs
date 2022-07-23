@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using CarAPI;
+using CarAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//-------------------------------------------------------------------------
+//Adicionado após a configuração do DbContext
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+//----------------------------------------------------------------------------------
 
 var app = builder.Build();
 
